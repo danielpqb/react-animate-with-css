@@ -1,9 +1,8 @@
 import { ReactNode } from "react";
 import { AnimateProps } from "./types";
 import "animate.css";
-export declare const useAnimation: () => {
+export declare const useAnimate: () => {
     animate: ({ id, name, duration, repeat, direction, timing, removeAfter, }: AnimateProps) => void;
-    Animation: typeof Animation;
 };
 export declare function AnimationContextProvider({ children, }: {
     children: ReactNode;

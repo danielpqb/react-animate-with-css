@@ -1,7 +1,5 @@
-import {
-  AnimationContextProvider as Provider,
-  useAnimation,
+export {
+  AnimationContextProvider,
+  Animation,
+  useAnimate,
 } from "./components/Animate/AnimationContext";
-
-export const { Animation, animate } = useAnimation();
-export const AnimationContextProvider = Provider;

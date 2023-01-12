@@ -1,12 +1,24 @@
-import React, { createContext, ReactNode, useContext, useEffect, useRef, useState } from "react";
-import { AnimateProps, AnimationNames, Animations, AnimationStates } from "./types";
-import "animate.css"
+import React, {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import {
+  AnimateProps,
+  AnimationNames,
+  Animations,
+  AnimationStates,
+} from "./types";
+import "animate.css";
 
 const AnimationContext = createContext({} as AnimationStates);
 
-export const useAnimation = () => {
+export const useAnimate = () => {
   const { animate } = useContext(AnimationContext);
-  return { animate, Animation };
+  return { animate };
 };
 
 const useAnimationContext = () => {
