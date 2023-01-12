@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/ban-types */
-/** @internal */
 
 export type AnimationStates = {
   animations: { [id: string]: Animations };
