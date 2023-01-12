@@ -1,0 +1,36 @@
+{
+  "name": "react-animate-with-css",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf ./dist",
+    "rollup": "npm run clean && rollup -c"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "animate.css": "^4.1.1",
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^24.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-typescript": "^11.0.0",
+    "@types/node": "^18.11.18",
+    "@types/react": "^18.0.26",
+    "rollup": "^3.9.1",
+    "rollup-plugin-dts": "^5.1.1",
+    "tsc": "^2.0.4",
+    "tslib": "^2.4.1",
+    "typescript": "^4.9.4"
+  }
+}
