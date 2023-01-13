@@ -133,7 +133,6 @@ export function Animation({
       ref={element}
       style={{
         flexDirection: "inherit",
-        margin: "auto",
         width: "fit-content",
         height: "fit-content",
         ...style,
