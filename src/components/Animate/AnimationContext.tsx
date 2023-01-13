@@ -133,8 +133,14 @@ export function Animation({
       ref={element}
       style={{
         flexDirection: "inherit",
-        width: "fit-content",
-        height: "fit-content",
+        justifyContent: "inherit",
+        alignItems: "inherit",
+        width: "inherit",
+        height: "inherit",
+        margin: "0",
+        padding: "0",
+        border: "none",
+        outline: "none",
         ...style,
         display:
           animations[id as keyof object]?.isRemoved === true

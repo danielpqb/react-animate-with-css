@@ -43,10 +43,12 @@ export default function App() {
 }
 ```
 
-**Important:** 
+**Important:**
 
 * You can't animate the position of components that has a position CSS property **fixed** or **absolute**, unless you create your own CSS animation that supports it.
-* The Animation component will always inherit its parent display CSS property.
+* I strongly recommend you to always use **display flex**, it will be much easier to make your CSS to work properly.
+* Keep in mind that the Animation component will try to mimic its parent inheriting the following CSS properties: **width**, **height**, **display**, **justify-content and** **align-items**.
+* You can always change this properties passing a style like this: `<Animation style={{ width: "40px", justifyContent: "flex-end" }}></Animation>`
 
 #### Animate using ID
 
