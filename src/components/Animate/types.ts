@@ -16,6 +16,7 @@ type Animate = ({
   id,
   name,
   duration,
+  delay,
   repeat,
   direction,
   timing,
@@ -26,6 +27,7 @@ export type AnimateProps = {
   id: string;
   name: AnimationNames;
   duration?: number;
+  delay?: number;
   repeat?: number;
   direction?: "normal" | "reverse" | "alternate" | "alternate-reverse";
   timing?:

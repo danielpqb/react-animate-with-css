@@ -17,8 +17,8 @@ import "animate.css";
 const AnimationContext = createContext({} as AnimationStates);
 
 export const useAnimate = () => {
-  const { animate } = useContext(AnimationContext);
-  return { animate };
+  const { animate, animations } = useContext(AnimationContext);
+  return { animate, animations };
 };
 
 const useAnimationContext = () => {
@@ -42,6 +42,7 @@ export function AnimationContextProvider({
     id,
     name,
     duration = 1000,
+    delay = 0,
     repeat = 1,
     direction = "normal",
     timing = "linear",
@@ -50,6 +51,7 @@ export function AnimationContextProvider({
     id: string;
     name: string;
     duration?: number;
+    delay?: number;
     repeat?: number;
     direction?: string;
     timing?: string;
@@ -62,12 +64,13 @@ export function AnimationContextProvider({
       repeat *= 2;
       duration /= 2;
     }
-    const _duration = (duration / 1000).toFixed(3).toString() + "s";
+    const _duration = duration.toString() + "ms";
 
     if (!animation.isAnimating) {
       putAnimation(id, { isAnimating: true, isRemoved: false });
       element.style.animationName = name;
       element.style.animationDuration = _duration;
+      element.style.animationDelay = delay.toString() + "ms";
       element.style.animationIterationCount = repeat.toString();
       element.style.animationDirection = direction;
       element.style.animationTimingFunction = timing;
@@ -76,7 +79,6 @@ export function AnimationContextProvider({
         element.style.animationName = "";
         if (removeAfter) {
           putAnimation(id, { isRemoved: true });
-          element.classList.add("removed");
         }
         putAnimation(id, { isAnimating: false });
       }, duration * repeat);
@@ -101,16 +103,23 @@ export function Animation({
   animateIn?: Omit<AnimateProps, "id">;
   children: ReactNode;
 }) {
-  if (animateIn === undefined) {
-    animateIn = { name: "fadeIn", duration: 1000 };
-  }
-  if (animateIn.duration === undefined) {
-    animateIn.duration = 1000;
-  }
+  if (!animateIn) animateIn = { name: "fadeIn" };
+  if (!animateIn?.direction) animateIn.direction = "normal";
+  if (!animateIn?.duration) animateIn.duration = 1000;
+  if (!animateIn?.delay) animateIn.delay = 0;
+  if (!animateIn?.removeAfter) animateIn.removeAfter = false;
+  if (!animateIn?.repeat) animateIn.repeat = 1;
+  if (!animateIn?.timing) animateIn.timing = "linear";
+
   animateIn.name = (animateIn.name as string).replace(
     "animate__",
     ""
   ) as AnimationNames;
+
+  if (animateIn.direction.includes("alternate")) {
+    animateIn.repeat *= 2;
+    animateIn.duration /= 2;
+  }
 
   const element = useRef(null);
 
@@ -125,11 +134,14 @@ export function Animation({
         });
 
         setTimeout(() => {
+          (element as any).current.style.animationName = "";
+          if (animateIn?.removeAfter) {
+            putAnimation(id, { isRemoved: true });
+          }
           putAnimation(id, {
             isAnimating: false,
           });
-          (element as any).current.style.animationName = "";
-        }, animateIn?.duration);
+        }, (animateIn?.duration || 0) * (animateIn?.repeat || 0));
       }
     };
   }, []);
@@ -139,8 +151,10 @@ export function Animation({
       ref={element}
       style={{
         animationName: animateIn.name as string,
-        animationDuration:
-          (animateIn.duration / 1000).toFixed(3).toString() + "s",
+        animationDuration: animateIn.duration.toString() + "ms",
+        animationIterationCount: animateIn.repeat?.toString(),
+        animationTimingFunction: animateIn.timing,
+        animationDelay: animateIn.delay.toString(),
         display:
           animations[id as keyof object]?.isRemoved === true
             ? "none"
