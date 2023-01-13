@@ -10,7 +10,6 @@ export type Animations = {
   element?: HTMLElement;
   isAnimating?: boolean;
   isRemoved?: boolean;
-  onlyFirstRender?: boolean;
 };
 
 type Animate = ({

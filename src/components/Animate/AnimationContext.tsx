@@ -9,7 +9,6 @@ import React, {
 import {
   AnimateProps,
   AnimatePropsGeneric,
-  AnimationNames,
   Animations,
   AnimationStates,
 } from "./types";
