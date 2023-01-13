@@ -97,15 +97,14 @@ export function Animation({
   id?: string;
   animateIn?: Omit<AnimateProps, "id">;
   children: ReactNode;
-  style: React.CSSProperties;
+  style?: React.CSSProperties;
 }) {
   const { animations, putAnimation } = useAnimationContext();
 
   const animateProps = setDefaultAnimateProps(animateIn as any);
-  const animationStyle =
-    animations[id as keyof object]?.onlyFirstRender === true
-      ? {}
-      : createAnimationStyle(animateProps);
+  const animationStyle = animations[id as keyof object]
+    ? {}
+    : createAnimationStyle(animateProps);
 
   const element = useRef(null);
 
@@ -115,7 +114,6 @@ export function Animation({
         putAnimation(id, {
           isAnimating: true,
           element: element.current || undefined,
-          onlyFirstRender: true,
         });
 
         setTimeout(() => {
