@@ -10,6 +10,7 @@ export type Animations = {
   element?: HTMLElement;
   isAnimating?: boolean;
   isRemoved?: boolean;
+  onlyFirstRender?: boolean;
 };
 
 type Animate = ({
@@ -39,6 +40,16 @@ export type AnimateProps = {
     | "step-start"
     | "step-end"
     | (string & {});
+  removeAfter?: boolean;
+};
+
+export type AnimatePropsGeneric = {
+  name?: string;
+  duration?: number;
+  delay?: number;
+  repeat?: number;
+  direction?: string;
+  timing?: string;
   removeAfter?: boolean;
 };
 

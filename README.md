@@ -43,7 +43,10 @@ export default function App() {
 }
 ```
 
-**Important:** You can't animate components with position **fixed** or **absolute**, unless you create your own css animation that supports it.
+**Important:** 
+
+* You can't animate the position of components that has a position CSS property **fixed** or **absolute**, unless you create your own CSS animation that supports it.
+* The Animation component will always inherit its parent display CSS property.
 
 #### Animate using ID
 
@@ -136,7 +139,6 @@ Type: ` string | "ease" | "ease-in" | "ease-out" | "ease-in-out" | "linear" | "s
 #### `[ removeAfter? ]`
 
 Type: `boolean`
-
 
 ### *animations*
 
