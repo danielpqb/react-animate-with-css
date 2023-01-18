@@ -54,10 +54,10 @@ export function AnimationContextProvider({
 
     const animateProps = setDefaultAnimateProps({
       name: name as string,
+      direction,
       duration,
       delay,
       repeat,
-      direction,
       timing,
       removeAfter,
     });
@@ -174,10 +174,11 @@ function setDefaultAnimateProps(animateProps?: AnimatePropsGeneric) {
 function createAnimationStyle(animateProps: Required<AnimatePropsGeneric>) {
   const animationStyle = {
     animationName: animateProps.name,
+    animationDirection: animateProps.direction,
     animationDuration: animateProps.duration.toString() + "ms",
+    animationDelay: animateProps.delay.toString() + "ms",
     animationIterationCount: animateProps.repeat?.toString(),
     animationTimingFunction: animateProps.timing,
-    animationDelay: animateProps.delay.toString() + "ms",
   };
 
   return animationStyle;
