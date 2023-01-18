@@ -66,7 +66,8 @@ export function AnimationContextProvider({
 
     if (!animation.isAnimating) {
       putAnimation(id, { isAnimating: true, isRemoved: false });
-      Object.assign(element.style, { ...element.style, ...animationStyle });
+      Object.assign(element.style, element.style);
+      Object.assign(element.style, animationStyle);
 
       setTimeout(() => {
         element.style.animationName = "";
