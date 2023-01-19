@@ -132,6 +132,14 @@ export function Animation({
         (element as any).current.style.display = "none";
       }, animateProps.duration * animateProps.repeat + animateProps.delay - removeAfterDiscount);
     }
+
+    return () => {
+      if (id) {
+        putAnimation(id, {
+          element: undefined,
+        });
+      }
+    };
   }, []);
 
   return (
