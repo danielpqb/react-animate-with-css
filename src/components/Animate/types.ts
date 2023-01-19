@@ -42,6 +42,24 @@ export type AnimateProps = {
   removeAfter?: boolean;
 };
 
+export type AnimateInProps = {
+  name: AnimationNames;
+  duration?: number;
+  delay?: number;
+  repeat?: number;
+  direction?: "normal" | "reverse";
+  timing?:
+    | "ease"
+    | "ease-in"
+    | "ease-out"
+    | "ease-in-out"
+    | "linear"
+    | "step-start"
+    | "step-end"
+    | (string & {});
+  removeAfter?: boolean;
+};
+
 export type AnimatePropsGeneric = {
   name?: string;
   duration?: number;

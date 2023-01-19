@@ -7,6 +7,7 @@ import React, {
   useState,
 } from "react";
 import {
+  AnimateInProps,
   AnimateProps,
   AnimatePropsGeneric,
   Animations,
@@ -64,9 +65,11 @@ export function AnimationContextProvider({
 
     const animationStyle = createAnimationStyle(animateProps);
 
+    const removeAfterDiscount = animateProps.removeAfter ? 100 : 0;
+
     if (!animation.isAnimating) {
       putAnimation(id, { isAnimating: true, isRemoved: false });
-      Object.assign(element.style, animationStyle)
+      Object.assign(element.style, animationStyle);
 
       setTimeout(() => {
         element.style.animationName = "";
@@ -74,7 +77,7 @@ export function AnimationContextProvider({
           putAnimation(id, { isRemoved: true });
         }
         putAnimation(id, { isAnimating: false });
-      }, animateProps.duration * animateProps.repeat);
+      }, animateProps.duration * animateProps.repeat + animateProps.delay - removeAfterDiscount);
     }
   }
 
@@ -94,7 +97,7 @@ export function Animation({
   style,
 }: {
   id?: string;
-  animateIn?: Omit<AnimateProps, "id">;
+  animateIn?: AnimateInProps;
   children: ReactNode;
   style?: React.CSSProperties;
 }) {
@@ -103,27 +106,32 @@ export function Animation({
   const animateProps = setDefaultAnimateProps(animateIn as any);
   const animationStyle = createAnimationStyle(animateProps);
 
+  const removeAfterDiscount = animateProps.removeAfter ? 100 : 0;
+
   const element = useRef(null);
 
   useEffect(() => {
-    return () => {
-      if (id && !animations[id]) {
-        putAnimation(id, {
-          isAnimating: true,
-          element: element.current || undefined,
-        });
+    if (id && !animations[id]?.element) {
+      putAnimation(id, {
+        isAnimating: true,
+        element: element.current || undefined,
+      });
 
-        setTimeout(() => {
-          (element as any).current.style.animationName = "";
-          if (animateProps.removeAfter) {
-            putAnimation(id, { isRemoved: true });
-          }
-          putAnimation(id, {
-            isAnimating: false,
-          });
-        }, animateProps.duration * animateProps.repeat);
-      }
-    };
+      setTimeout(() => {
+        if (element.current) (element as any).current.style.animationName = "";
+        if (animateProps.removeAfter) {
+          putAnimation(id, { isRemoved: true });
+        }
+        putAnimation(id, {
+          isAnimating: false,
+        });
+      }, animateProps.duration * animateProps.repeat + animateProps.delay - removeAfterDiscount);
+    }
+    if (!id && animateProps?.removeAfter && element?.current) {
+      setTimeout(() => {
+        (element as any).current.style.display = "none";
+      }, animateProps.duration * animateProps.repeat + animateProps.delay - removeAfterDiscount);
+    }
   }, []);
 
   return (
